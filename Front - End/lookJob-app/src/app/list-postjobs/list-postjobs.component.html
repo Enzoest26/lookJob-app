@@ -1,0 +1,22 @@
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+
+<div class="head-search">
+    <h2>Busqueda de trabajo</h2>
+    <div class="search-job">
+        <div class="search-text">
+            <label for="">Cargo: </label>
+            <input type="text" class="form-control">
+        </div>
+        <button class="btn btn-primary">Buscar</button>
+
+    </div>
+</div>
+<div class="separate-line"></div>
+<h3 style="text-align: center; font-weight: lighter; margin: 2rem auto;">Resultados para: ""</h3>
+<div>
+    <div class="conts-list-jobs" *ngFor="let job of jobs" (click)="onPostClick(job.id)">
+        <i class="bi bi-buildings" style="font-size: 2.5rem;"></i>
+        <h4>{{job.title}}</h4>
+        <p>{{job.direction}}</p>
+    </div>
+</div>

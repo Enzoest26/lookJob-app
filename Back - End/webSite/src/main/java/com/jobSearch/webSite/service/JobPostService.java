@@ -1,7 +1,7 @@
 package com.jobSearch.webSite.service;
 
 import com.jobSearch.webSite.model.JobPost;
-import com.jobSearch.webSite.repository.JobPostRepository;
+import com.jobSearch.webSite.model.repository.JobPostRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;

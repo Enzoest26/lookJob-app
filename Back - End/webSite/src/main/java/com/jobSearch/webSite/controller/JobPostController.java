@@ -12,25 +12,33 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/post")
+@CrossOrigin(origins = "http://localhost:4200")
 public class JobPostController {
     @Autowired
-    private JobPostService jobPostService;
+    private final JobPostService jobPostService;
+
+    public JobPostController(JobPostService jobPostService) {
+        this.jobPostService = jobPostService;
+    }
 
     @PostMapping("/add")
     public ResponseEntity<JobPost> addPostJob(@RequestBody JobPost jobPost ){
         JobPost postDisplay = jobPostService.postJob(jobPost);
+        System.out.println("Works in add");
         return new ResponseEntity<>(postDisplay, HttpStatus.CREATED);
     }
 
     @GetMapping("/get/all")
     public ResponseEntity<List<JobPost>> listAllPostJobs(){
         List<JobPost> listDisplay = jobPostService.listPostsJobs();
+        System.out.println("Works in Get/All");
         return new ResponseEntity<>(listDisplay, HttpStatus.OK);
     }
 
     @GetMapping("/get/{id}")
     public ResponseEntity<Optional<JobPost>> getPostJob(@PathVariable Long id){
         Optional<JobPost> jobDisplay = jobPostService.getOnlyJobPost(id);
+        System.out.println("Works in Get/id");
         return new ResponseEntity<>(jobDisplay, HttpStatus.OK);
     }
 }

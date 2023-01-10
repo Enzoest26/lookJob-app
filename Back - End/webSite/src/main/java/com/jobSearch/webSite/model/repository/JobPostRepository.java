@@ -1,4 +1,4 @@
-package com.jobSearch.webSite.repository;
+package com.jobSearch.webSite.model.repository;
 
 import com.jobSearch.webSite.model.JobPost;
 import org.springframework.data.jpa.repository.JpaRepository;

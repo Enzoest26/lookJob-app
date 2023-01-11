@@ -1,1 +1,43 @@
-<p>get-postjob works!</p>
+<div *ngIf="jobPost" class="cont-get-job">
+
+    <div class="cont-column">
+        <div class="cont-info-job">
+            <h3>{{jobPost.title}}</h3>
+            <div class="separate-line"></div>
+            <div class="content">
+                <p>{{jobPost.content}}</p>
+            </div>
+            <h5 class="title-requi">Requiriments</h5>
+            <ul class="cont-requi">
+                <li *ngFor="let requi of jobPost.requirements">{{requi}}</li>
+            </ul>
+        </div>
+        <div>
+            <form class="cont-action">
+                <button class="btn btn-secondary" style="margin-bottom: 0.5rem;">Subir CV</button>
+                <button class="btn btn-primary">Postular</button>
+                <div class="terms-job">
+                    <label>
+                        <input type="checkbox" class="form-check-input" required> Autoriza el uso de los datos
+                        personales
+                        a fines empresariales. Mire más en <a href="">Políticas de empresa</a>
+                    </label>
+                </div>
+            </form>
+
+        </div>
+    </div>
+    <div class="">
+        <div *ngIf="!jobPostSimilars">
+            <button class="btn btn-primary" (click)="onGetSimilarJobs(jobPost.typesJob)">Ver más</button>
+        </div>
+        <div *ngIf="jobPostSimilars" class="cont-similar-jobs">
+            <h3 style="text-align: center; grid-column: 1/4; margin: 2rem auto;">Empleos similares</h3>
+            <div class="similar-job" *ngFor="let similar of jobPostSimilars" (click)="getJobPost(similar.id)">
+                <h4>{{similar.title}}</h4>
+                <p>{{similar.direction}}</p>
+            </div>
+
+        </div>
+    </div>
+</div>

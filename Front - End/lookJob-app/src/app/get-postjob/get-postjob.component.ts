@@ -10,7 +10,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class GetPostjobComponent implements OnInit{
   jobPost: JobPost | undefined;
-
+  jobPostSimilars: JobPost[] | undefined;;
   
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
@@ -21,27 +21,42 @@ export class GetPostjobComponent implements OnInit{
   });
   }
   constructor(private jobService:JobPostService, private route: ActivatedRoute){
-
   }
+  /*
   private setJobPost(data: JobPost){
     this.jobPost = data;
     console.log(this.jobPost);
+    
   }
-  /*
+
   private getJobPost(id: number){
     this.jobService.getOnlyPostJob(id).subscribe((data) => {
       this.setJobPost(data);
     });
     
   }*/
-  private async getJobPost(id: number) {
+  //Using await method to wait for http request from the back-side server
+
+  async getJobPost(id: number) {
     try {
       const data = await this.jobService.getOnlyPostJob(id).toPromise();
       this.jobPost = data;
       console.log(this.jobPost);
+      console.log(this.jobPost?.requirements);
     } catch (error) {
       console.error(error);
     }
-}
 
+  }
+
+  async onGetSimilarJobs(ids: Array<number>){
+     try {
+      console.log(ids);
+      const data = await this.jobService.getSimilaritiesPostJobs(ids).toPromise();
+      this.jobPostSimilars = data;
+      console.log(this.jobPostSimilars);
+    } catch (error) {
+      console.error(error);
+    }
+  }
 }

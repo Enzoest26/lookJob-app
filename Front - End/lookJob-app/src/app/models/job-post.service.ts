@@ -20,5 +20,7 @@ private baseURL = 'http://localhost:8080/post';
   getOnlyPostJob(id: number): Observable<JobPost>{
     return this.httpClient.get<JobPost>(`${this.baseURL}/get/${id}`);
   }
-  
+  getSimilaritiesPostJobs(id: Array<number>): Observable<JobPost[]>{
+    return this.httpClient.post<JobPost[]>(`${this.baseURL}/get/similarities`, id);
+  }
 }

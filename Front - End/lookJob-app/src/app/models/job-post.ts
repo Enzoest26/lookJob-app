@@ -1,9 +1,9 @@
 export class JobPost {
     id: number;
     title: string;
-    company: number;
+    idCompany: number;
     direction: string;
-    listTypesjob: Array<number>;
-    content: Array<string>;
-    listRequirements: Array<string>;
+    typesJob: Array<number>;
+    content: string;
+    requirements: Array<string>;
 }

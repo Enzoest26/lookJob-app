@@ -1,7 +1,7 @@
 package com.jobSearch.webSite.service;
 
 import com.jobSearch.webSite.model.JobPost;
-import com.jobSearch.webSite.model.repository.JobPostRepository;
+import com.jobSearch.webSite.repository.JobPostRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,10 +18,14 @@ import java.util.Optional;
 public class JobPostService {
 
     @Autowired
-    private JobPostRepository jobPostRepository;
+    private final JobPostRepository jobPostRepository;
 
     @Autowired
     JdbcTemplate jdbcTemplate;
+
+    public JobPostService(JobPostRepository jobPostRepository) {
+        this.jobPostRepository = jobPostRepository;
+    }
 
     //Methods to post a job
     @Transactional
@@ -108,4 +113,35 @@ public class JobPostService {
         getJob.get().setTypesJob(getTypesJobsPost(id));
         return getJob;
     }
+    String sql = "select distinct(id_jpost) from tb_post_types where id_type = 2 or id_type = 3 or id_type = 1 \n" +
+            "order by id_jpost desc limit 3";
+    //Get similars jobs, simple algorithm
+   public List<Optional<JobPost>> getSimilarJobs(Integer[] typesJobs){
+
+       String sqlTest = "select distinct(id_jpost) from tb_post_types where id_type in (";
+       for (int i =0; i<typesJobs.length; i++){
+           sqlTest += typesJobs[i] + ",";
+       }
+        //Remove the coma
+       sqlTest = sqlTest.substring(0,sqlTest.length() - 1);
+       sqlTest += ") order by id_jpost desc limit 3";
+
+        List<Integer> idsPost = jdbcTemplate.query(sqlTest, new RowMapper<Integer>() {
+            @Override
+            public Integer mapRow(ResultSet rs, int rowNum) throws SQLException {
+                return rs.getInt("id_jpost");
+            }
+        });
+       List<Optional<JobPost>> jobPostList = new ArrayList<>();
+
+       for (Integer idPost: idsPost){
+            Optional<JobPost> post = jobPostRepository.findById(Long.valueOf(idPost));
+            post.get().setTypesJob(getTypesJobsPost(Long.valueOf(idPost)));
+            post.get().setRequirements(getRequiPost(Long.valueOf(idPost)));
+            jobPostList.add(post);
+       }
+
+        return jobPostList;
+    }
+
 }

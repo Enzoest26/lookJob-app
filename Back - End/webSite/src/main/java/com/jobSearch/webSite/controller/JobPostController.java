@@ -41,4 +41,12 @@ public class JobPostController {
         System.out.println("Works in Get/id");
         return new ResponseEntity<>(jobDisplay, HttpStatus.OK);
     }
+
+    @PostMapping("/get/similarities")
+    public ResponseEntity<List<Optional<JobPost>>> getPostSimilarities(@RequestBody Integer[] typesJobsype) {
+        System.out.println("Types of jobs: " + typesJobsype);
+        List<Optional<JobPost>> listPost= jobPostService.getSimilarJobs(typesJobsype);
+        System.out.println("Works in similarities get/similars");
+        return new ResponseEntity<>(listPost, HttpStatus.OK);
+    }
 }

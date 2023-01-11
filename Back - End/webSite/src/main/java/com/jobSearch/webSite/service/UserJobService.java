@@ -1,7 +1,7 @@
 package com.jobSearch.webSite.service;
 
 import com.jobSearch.webSite.model.UserJob;
-import com.jobSearch.webSite.model.repository.UserJobRepository;
+import com.jobSearch.webSite.repository.UserJobRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

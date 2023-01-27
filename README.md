@@ -13,5 +13,6 @@ Technologies to use:
 - Spring Boot
 - AngularJS
 - Docker
+- ElasticSearch
 
 Developing by: Enzo Esteban
